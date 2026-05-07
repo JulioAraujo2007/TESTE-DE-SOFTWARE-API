@@ -1,92 +1,321 @@
-# TESTE-DE-SOFTWARE-API
-API de cadastro ao aluno, utilizada e criada para a disciplina Teste de Software com cunho de serem realizados todos os tipos de teste para validação e documentação de suas funcionalidades.
+# API Cadastro de Alunos
 
+Sistema desenvolvido em Java com comunicação com banco de dados MySQL utilizando JDBC.
 
-# API-CADASTRO-ALUNO
-JAVA com comunicação com o banco de dados MYSQL.
+O projeto permite:
 
-🚀 Como executar a API de Cadastro de Alunos
+- Cadastro de alunos
+- Edição de alunos
+- Exclusão de alunos
+- Pesquisa de registros
+- Integração com banco MySQL
+- Testes unitários com JUnit
 
-Este guia explica como configurar e executar o projeto localmente.
+---
 
-📋 Pré-requisitos
+# Tecnologias Utilizadas
 
-Antes de começar, você precisa ter instalado:
+- Java JDK 8+
+- Apache NetBeans
+- JDBC
+- MySQL
+- JUnit 4
+- Hamcrest
 
-☕ Java (JDK 8 ou superior)
+---
 
-🛠️ Maven ou Gradle (dependendo do projeto)
+# Estrutura do Projeto
 
-🛢️ MySQL Server
-
-🧪 Postman ou Insomnia (opcional, para testar a API)
-
-📥 Clonando o repositório:
-```Bash
-git clone https://github.com/JulioAraujo2007/API-CADASTRO-ALUNO.git
-cd API-CADASTRO-ALUNO
+```text
+src/
+ ├── br.com.controle
+ ├── br.com.model
+ ├── br.com.view
+ └── br.com.testes
 ```
 
-🛢️ Configuração do banco de dados
+---
 
-Abra o MySQL
+# Pré-requisitos
 
-Crie o banco de dados:
-```SQL
+Antes de executar o projeto, instale:
+
+- Java JDK 8 ou superior
+- Apache NetBeans
+- MySQL Server
+
+---
+
+# Configuração do Banco de Dados
+
+## 1. Abrir o MySQL
+
+Crie o banco:
+
+```sql
 CREATE DATABASE cadastro_alunos;
 ```
 
-Crie a tabela:
-```SQL
+---
+
+## 2. Criar a tabela
+
+```sql
 CREATE TABLE alunos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    mat INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100),
-    email VARCHAR(100),
-    idade INT
+    idade INT,
+    email VARCHAR(100)
 );
 ```
 
-⚙️ Configuração da aplicação
+---
 
-No arquivo de configuração (geralmente application.properties ou application.yml), ajuste os dados do seu MySQL:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/cadastro_alunos
-spring.datasource.username=SEU_USUARIO
-spring.datasource.password=SUA_SENHA
+# Configuração do Driver MySQL
 
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+O projeto utiliza o MySQL Connector/J manualmente.
+
+## Download do Driver
+
+Baixe o driver oficial:
+
+https://dev.mysql.com/downloads/connector/j/
+
+Selecione:
+
+```text
+Platform Independent
 ```
 
-▶️ Executando o projeto
+Extraia o arquivo `.zip` e utilize o arquivo:
 
-Se estiver usando Maven:
-```Bash
-mvn spring-boot:run
+```text
+mysql-connector-j-9.7.0.jar
 ```
 
-Ou compile e execute:
-```Bash
-mvn clean install
-java -jar target/*.jar
+---
+
+# Adicionando o Driver no NetBeans
+
+## Passo a passo
+
+1. Clique com botão direito no projeto
+2. Properties
+3. Libraries
+4. Add JAR/Folder
+5. Selecione:
+
+```text
+mysql-connector-j-9.7.0.jar
 ```
 
-🌐 Acessando a API
+---
 
-Após iniciar, a API estará disponível em:
-```
-http://localhost:8080
-```
+# Corrigindo erro de biblioteca quebrada
 
-⚠️ Possíveis erros
+Caso apareça:
 
-❌ Erro de conexão com banco
-→ Verifique usuário, senha e se o MySQL está rodando
-
-❌ Porta 8080 em uso
-→ Altere no application.properties:
-```properties
-server.port=8081
+```text
+Broken reference mysql-connector
 ```
 
-✅ Pronto!
+Faça:
+
+1. Properties
+2. Libraries
+3. Remova a referência vermelha
+4. Adicione novamente o `.jar`
+
+---
+
+# Configuração da Conexão JDBC
+
+Verifique os dados de conexão na classe:
+
+```text
+DAO.java
+```
+
+Exemplo:
+
+```java
+String url = "jdbc:mysql://localhost:3306/cadastro_alunos";
+String usuario = "root";
+String senha = "123456";
+```
+
+---
+
+# Executando o Projeto
+
+No NetBeans:
+
+```text
+Run Project
+```
+
+ou:
+
+```text
+F6
+```
+
+---
+
+# Configuração do JUnit
+
+O projeto utiliza JUnit 4.
+
+## Download do JUnit 4
+
+https://junit.org/junit4/
+
+ou:
+
+https://repo1.maven.org/maven2/junit/junit/4.13.2/
+
+Baixe:
+
+```text
+junit-4.13.2.jar
+```
+
+---
+
+# Download do Hamcrest
+
+O JUnit 4 depende do Hamcrest.
+
+Baixe:
+
+https://repo1.maven.org/maven2/org/hamcrest/hamcrest/2.2/
+
+Arquivo:
+
+```text
+hamcrest-2.2.jar
+```
+
+---
+
+# Adicionando JUnit no NetBeans
+
+1. Clique direito no projeto
+2. Properties
+3. Libraries
+4. Add JAR/Folder
+5. Adicione:
+
+```text
+junit-4.13.2.jar
+hamcrest-2.2.jar
+```
+
+---
+
+# Estrutura de Testes
+
+```text
+Test Packages
+ └── br.com.testes
+        └── AlunoTest.java
+```
+
+---
+
+# Executando os Testes
+
+## Executar todos os testes
+
+Clique direito em:
+
+```text
+AlunoTest.java
+```
+
+Depois:
+
+```text
+Test File
+```
+
+---
+
+## Executar teste individual
+
+Clique dentro do método com `@Test`.
+
+Depois:
+
+```text
+Run Focused Test Method
+```
+
+---
+
+# Funcionalidades Testadas
+
+- Cadastro de aluno
+- Validação de campos obrigatórios
+- Validação de email
+- Listagem de alunos
+- Atualização de dados
+- Exclusão de aluno
+- Mensagens de sucesso e erro
+
+---
+
+# Possíveis Erros
+
+## Erro de conexão MySQL
+
+Verifique:
+
+- se o MySQL está rodando
+- usuário e senha
+- banco criado corretamente
+
+---
+
+## Erro:
+
+```text
+org/hamcrest/SelfDescribing
+```
+
+Adicione:
+
+```text
+hamcrest-2.2.jar
+```
+
+---
+
+## Erro:
+
+```text
+package org.junit does not exist
+```
+
+Adicione:
+
+```text
+junit-4.13.2.jar
+```
+
+---
+
+# Melhorias Futuras
+
+- Migração para Maven
+- Migração para Spring Boot
+- API REST
+- Mockito
+- Testes automatizados avançados
+- Docker
+- Integração contínua
+
+---
+
+# Autor
+Grupo-05-Teste-de-software
